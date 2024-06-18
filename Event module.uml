@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement>com.eventmanager.eventservice.service.EventService</OriginalElement>
+  <nodes>
+    <node x="620.0" y="1909.25">com.eventmanager.eventservice.model.Event</node>
+    <node x="445.0" y="1536.5">com.eventmanager.eventservice.service.EventService</node>
+    <node x="-98.0" y="2128.0">com.eventmanager.eventservice.dto.EventDtoRequest</node>
+    <node x="-98.0" y="1225.0">com.eventmanager.eventservice.controller.EventController</node>
+    <node x="-98.0" y="1535.0">com.eventmanager.eventservice.service.EventServiceImpl</node>
+    <node x="438.0" y="1727.5">com.eventmanager.eventservice.dao.EventRepository</node>
+    <node x="261.0" y="2128.0">com.eventmanager.eventservice.dto.EventDtoResponse</node>
+    <node x="445.0" y="1225.5">com.eventmanager.eventservice.service.api.EventAPIService</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="com.eventmanager.eventservice.service.EventServiceImpl" target="com.eventmanager.eventservice.dao.EventRepository" relationship="TO_ONE">
+      <point x="-111.5" y="-260.0" />
+      <point x="13.5" y="1687.5" />
+      <point x="687.8" y="1687.5" />
+      <point x="687.8" y="1848.675" />
+      <point x="715.0" y="1848.675" />
+      <point x="0.0" y="67.5" />
+    </edge>
+    <edge source="com.eventmanager.eventservice.service.EventService" target="com.eventmanager.eventservice.service.api.EventAPIService" relationship="INTERFACE_GENERALIZATION">
+      <point x="0.0" y="-55.5" />
+      <point x="0.0" y="115.5" />
+    </edge>
+    <edge source="com.eventmanager.eventservice.service.EventServiceImpl" target="com.eventmanager.eventservice.service.EventService" relationship="REALIZATION">
+      <point x="223.0" y="-203.0" />
+      <point x="-223.0" y="0.0" />
+    </edge>
+    <edge source="com.eventmanager.eventservice.controller.EventController" target="com.eventmanager.eventservice.service.api.EventAPIService" relationship="TO_ONE">
+      <point x="0.0" y="-116.0" />
+      <point x="125.0" y="1291.7" />
+      <point x="409.8876953125" y="1291.7" />
+      <point x="409.8876953125" y="1456.5" />
+      <point x="111.5" y="115.5" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic" zoom="0.6400000000000001" showDependencies="true" x="753.6939453125001" y="1767.15625" />
+  <SelectedNodes />
+  <Categories>
+    <Category>Fields</Category>
+    <Category>Inner Classes</Category>
+    <Category>Methods</Category>
+  </Categories>
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+

@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement>com.eventmanager.eventservice.model.Budget</OriginalElement>
+  <nodes>
+    <node x="1003.8215940428713" y="2116.5514705882356">com.eventmanager.eventservice.model.Authority</node>
+    <node x="568.7279661016948" y="2152.3943014705883">com.eventmanager.eventservice.model.UserCredentials</node>
+    <node x="967.5279661016948" y="1617.0">com.eventmanager.eventservice.model.Invitation</node>
+    <node x="915.9279661016949" y="2365.3943014705883">com.eventmanager.eventservice.model.UserPrincipal</node>
+    <node x="633.9279661016949" y="902.5">com.eventmanager.eventservice.model.enums.TaskStatus</node>
+    <node x="915.9279661016949" y="1339.0">com.eventmanager.eventservice.model.Budget</node>
+    <node x="542.9279661016949" y="1586.0">com.eventmanager.eventservice.model.Event</node>
+    <node x="389.92796610169484" y="1123.5">com.eventmanager.eventservice.model.enums.Gender</node>
+    <node x="915.9279661016947" y="837.0">com.eventmanager.eventservice.model.Payment</node>
+    <node x="568.7279661016948" y="2400.8943014705883">com.eventmanager.eventservice.model.Participant</node>
+    <node x="154.928" y="1650.2141544117646">com.eventmanager.eventservice.model.EventType</node>
+    <node x="229.928" y="2389.3943014705883">com.eventmanager.eventservice.model.Organizer</node>
+    <node x="554.9279661016949" y="1327.0">com.eventmanager.eventservice.model.Checklist</node>
+    <node x="243.42796610169484" y="1291.0">com.eventmanager.eventservice.model.Guest</node>
+    <node x="154.928" y="2293.8273838235295">com.eventmanager.eventservice.model.enums.RequestStatus</node>
+    <node x="554.9279661016949" y="1046.0">com.eventmanager.eventservice.model.Task</node>
+    <node x="154.928" y="1848.0661764705883">com.eventmanager.eventservice.model.Request</node>
+    <node x="915.9279661016948" y="1046.0">com.eventmanager.eventservice.model.BudgetCategory</node>
+    <node x="227.92796610169484" y="1123.5">com.eventmanager.eventservice.model.enums.RVSPStatus</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="com.eventmanager.eventservice.model.Task" target="com.eventmanager.eventservice.model.enums.TaskStatus" relationship="TO_ONE">
+      <point x="0.0" y="-91.5" />
+      <point x="0.0" y="14.0" />
+    </edge>
+    <edge source="com.eventmanager.eventservice.model.Request" target="com.eventmanager.eventservice.model.EventType" relationship="TO_ONE">
+      <point x="-66.11948529411762" y="-151.5" />
+      <point x="0.0" y="55.5" />
+    </edge>
+    <edge source="com.eventmanager.eventservice.model.Invitation" target="com.eventmanager.eventservice.model.Event" relationship="TO_ONE">
+      <point x="-133.20000000000005" y="17.0" />
+      <point x="159.0" y="0.0" />
+    </edge>
+    <edge source="com.eventmanager.eventservice.model.Event" target="com.eventmanager.eventservice.model.Invitation" relationship="TO_ONE">
+      <point x="159.0" y="15.0" />
+      <point x="-133.20000000000005" y="32.0" />
+    </edge>
+    <edge source="com.eventmanager.eventservice.model.Payment" target="com.eventmanager.eventservice.model.BudgetCategory" relationship="TO_ONE">
+      <point x="15.0" y="79.5" />
+      <point x="8.299999999999955" y="-91.5" />
+    </edge>
+    <edge source="com.eventmanager.eventservice.model.UserCredentials" target="com.eventmanager.eventservice.model.Authority" relationship="TO_ONE">
+      <point x="133.19999999999993" y="0.0" />
+      <point x="919.474780072283" y="2231.8943014705883" />
+      <point x="919.474780072283" y="2172.0514705882356" />
+      <point x="-86.2819852941177" y="0.0" />
+    </edge>
+    <edge source="com.eventmanager.eventservice.model.Guest" target="com.eventmanager.eventservice.model.enums.RVSPStatus" relationship="TO_ONE">
+      <point x="-72.5" y="-115.5" />
+      <point x="0.0" y="14.0" />
+    </edge>
+    <edge source="com.eventmanager.eventservice.model.Checklist" target="com.eventmanager.eventservice.model.Task" relationship="TO_MANY">
+      <point x="0.0" y="-79.5" />
+      <point x="0.0" y="91.5" />
+    </edge>
+    <edge source="com.eventmanager.eventservice.model.Organizer" target="com.eventmanager.eventservice.model.UserCredentials" relationship="TO_ONE">
+      <point x="15.0" y="-103.5" />
+      <point x="363.928" y="2231.8943014705883" />
+      <point x="-133.20000000000005" y="0.0" />
+    </edge>
+    <edge source="com.eventmanager.eventservice.model.Request" target="com.eventmanager.eventservice.model.Organizer" relationship="TO_ONE">
+      <point x="37.5" y="151.5" />
+      <point x="0.0" y="-103.5" />
+    </edge>
+    <edge source="com.eventmanager.eventservice.model.Event" target="com.eventmanager.eventservice.model.EventType" relationship="TO_ONE">
+      <point x="-158.9999661016949" y="0.0" />
+      <point x="506.0" y="1761.5" />
+      <point x="506.0" y="1705.714" />
+      <point x="90.38048529411765" y="-1.544117646972154E-4" />
+    </edge>
+    <edge source="com.eventmanager.eventservice.model.Request" target="com.eventmanager.eventservice.model.UserCredentials" relationship="TO_MANY">
+      <point x="156.5" y="144.0" />
+      <point x="518.3279830508475" y="2143.5661764705883" />
+      <point x="518.3279830508475" y="2174.3943014705883" />
+      <point x="-133.20000000000005" y="-57.5" />
+    </edge>
+    <edge source="com.eventmanager.eventservice.model.Request" target="com.eventmanager.eventservice.model.enums.RequestStatus" relationship="TO_ONE">
+      <point x="-75.5" y="151.5" />
+      <point x="235.928" y="2141.7496294117645" />
+      <point x="0.0" y="-14.0" />
+    </edge>
+    <edge source="com.eventmanager.eventservice.model.BudgetCategory" target="com.eventmanager.eventservice.model.Budget" relationship="TO_ONE">
+      <point x="25.800000000000182" y="91.5" />
+      <point x="0.0" y="-67.5" />
+    </edge>
+    <edge source="com.eventmanager.eventservice.model.Budget" target="com.eventmanager.eventservice.model.BudgetCategory" relationship="TO_MANY">
+      <point x="-25.800000000000182" y="-67.5" />
+      <point x="0.0" y="91.5" />
+    </edge>
+    <edge source="com.eventmanager.eventservice.model.Event" target="com.eventmanager.eventservice.model.Checklist" relationship="TO_MANY">
+      <point x="3.3898305105140025E-5" y="-175.5" />
+      <point x="3.3898305105140025E-5" y="79.5" />
+    </edge>
+    <edge source="com.eventmanager.eventservice.model.Event" target="com.eventmanager.eventservice.model.Guest" relationship="TO_MANY">
+      <point x="-159.0" y="-76.5" />
+      <point x="371.42796610169484" y="1685.0" />
+      <point x="0.0" y="115.5" />
+    </edge>
+    <edge source="com.eventmanager.eventservice.model.UserCredentials" target="com.eventmanager.eventservice.model.Event" relationship="TO_MANY">
+      <point x="0.0" y="-79.5" />
+      <point x="0.0" y="175.5" />
+    </edge>
+    <edge source="com.eventmanager.eventservice.model.Event" target="com.eventmanager.eventservice.model.UserCredentials" relationship="TO_MANY">
+      <point x="-15.0" y="175.5" />
+      <point x="-15.0" y="-79.5" />
+    </edge>
+    <edge source="com.eventmanager.eventservice.model.Guest" target="com.eventmanager.eventservice.model.Event" relationship="TO_ONE">
+      <point x="128.0" y="112.5" />
+      <point x="686.928" y="1519.0" />
+      <point x="-14.999966101694895" y="-175.5" />
+    </edge>
+    <edge source="com.eventmanager.eventservice.model.Budget" target="com.eventmanager.eventservice.model.Event" relationship="TO_ONE">
+      <point x="-137.0" y="67.5" />
+      <point x="937.9279661016949" y="1731.5" />
+      <point x="159.0" y="-30.0" />
+    </edge>
+    <edge source="com.eventmanager.eventservice.model.Request" target="com.eventmanager.eventservice.model.Participant" relationship="TO_ONE">
+      <point x="-156.5" y="0.0" />
+      <point x="137.428" y="1999.5661764705883" />
+      <point x="137.428" y="2613.8943014705883" />
+      <point x="701.9279661016949" y="2613.8943014705883" />
+      <point x="0.0" y="92.0" />
+    </edge>
+    <edge source="com.eventmanager.eventservice.model.Event" target="com.eventmanager.eventservice.model.Budget" relationship="TO_ONE">
+      <point x="159.0" y="-45.0" />
+      <point x="922.9279661016949" y="1716.5" />
+      <point x="-152.0" y="67.5" />
+    </edge>
+    <edge source="com.eventmanager.eventservice.model.Participant" target="com.eventmanager.eventservice.model.UserCredentials" relationship="TO_ONE">
+      <point x="0.0" y="-92.0" />
+      <point x="0.0" y="79.5" />
+    </edge>
+    <edge source="com.eventmanager.eventservice.model.Task" target="com.eventmanager.eventservice.model.Checklist" relationship="TO_ONE">
+      <point x="-15.0" y="91.5" />
+      <point x="-15.0" y="-79.5" />
+    </edge>
+    <edge source="com.eventmanager.eventservice.model.UserPrincipal" target="com.eventmanager.eventservice.model.UserCredentials" relationship="TO_ONE">
+      <point x="0.0" y="-115.5" />
+      <point x="1074.927966101695" y="2304.8943014705883" />
+      <point x="133.19999999999993" y="73.0" />
+    </edge>
+    <edge source="com.eventmanager.eventservice.model.BudgetCategory" target="com.eventmanager.eventservice.model.Payment" relationship="TO_MANY">
+      <point x="-6.7000000000000455" y="-91.5" />
+      <point x="0.0" y="79.5" />
+    </edge>
+    <edge source="com.eventmanager.eventservice.model.Guest" target="com.eventmanager.eventservice.model.enums.Gender" relationship="TO_ONE">
+      <point x="72.5" y="-115.5" />
+      <point x="0.0" y="14.0" />
+    </edge>
+    <edge source="com.eventmanager.eventservice.model.Checklist" target="com.eventmanager.eventservice.model.Event" relationship="TO_ONE">
+      <point x="15.000033898305105" y="79.5" />
+      <point x="15.000033898305105" y="-175.5" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic" zoom="0.5514445007602635" showDependencies="true" x="1037.1311088235295" y="1973.9273897058824" />
+  <SelectedNodes />
+  <Categories>
+    <Category>Properties</Category>
+  </Categories>
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+
