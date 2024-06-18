@@ -7,6 +7,8 @@ import com.eventmanager.eventservice.model.Authority;
 import com.eventmanager.eventservice.model.UserCredentials;
 import com.eventmanager.eventservice.model.enums.AuthorityName;
 import com.eventmanager.eventservice.service.api.UserInfoAPIService;
+import com.eventmanager.eventservice.service.strategy.UserInfoStrategy;
+import com.eventmanager.eventservice.service.strategy.UserInfoStrategyContext;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -18,9 +20,8 @@ import java.util.List;
 @RequiredArgsConstructor
 public class UserInfoServiceImpl implements UserInfoAPIService {
 
-    private final OrganizerService organizerService;
-    private final ParticipantService participantService;
     private final AuthorityRepository authorityRepository;
+    private final UserInfoStrategyContext strategyContext;
 
     @Override
     public UserInfoDtoResponse createUser(UserInfoDtoRequest request) {
@@ -28,18 +29,14 @@ public class UserInfoServiceImpl implements UserInfoAPIService {
         Authority authority = authorityRepository.findByName(request.getRoleName())
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Role is not found"));
 
-        if (AuthorityName.ROLE_ORGANIZER.equals(request.getRoleName())) {
-            return organizerService.createUser(request, authority);
-        } else if (AuthorityName.ROLE_USER.equals(request.getRoleName())) {
-            return participantService.createUser(request, authority);
-        }
-
-        throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid user role");
+        UserInfoStrategy userInfoStrategy = strategyContext.getStrategy(request.getRoleName());
+        return userInfoStrategy.createUser(request, authority);
     }
 
     @Override
     public List<UserInfoDtoResponse> getOrganizersList() {
-        return organizerService.getList();
+        UserInfoStrategy userInfoStrategy = strategyContext.getStrategy(AuthorityName.ROLE_ORGANIZER);
+        return userInfoStrategy.getList();
     }
 
     @Override
@@ -48,12 +45,7 @@ public class UserInfoServiceImpl implements UserInfoAPIService {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Access denied");
         }
 
-        if (AuthorityName.ROLE_ORGANIZER.equals(userCredentials.getRole().getName())) {
-            return organizerService.getByUser(userCredentials);
-        } else if (AuthorityName.ROLE_USER.equals(userCredentials.getRole().getName())) {
-            return participantService.getByUser(userCredentials);
-        }
-
-        throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User is not found");
+        UserInfoStrategy userInfoStrategy = strategyContext.getStrategy(userCredentials.getRole().getName());
+        return userInfoStrategy.getByUser(userCredentials);
     }
 }

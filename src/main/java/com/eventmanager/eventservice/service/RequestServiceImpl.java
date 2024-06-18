@@ -6,6 +6,8 @@ import com.eventmanager.eventservice.dto.RequestDtoResponse;
 import com.eventmanager.eventservice.model.*;
 import com.eventmanager.eventservice.model.enums.RequestStatus;
 import com.eventmanager.eventservice.service.mapper.RequestMapper;
+import com.eventmanager.eventservice.service.strategy.OrganizerService;
+import com.eventmanager.eventservice.service.strategy.ParticipantService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
