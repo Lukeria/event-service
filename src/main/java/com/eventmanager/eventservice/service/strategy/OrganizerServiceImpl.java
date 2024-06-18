@@ -1,4 +1,4 @@
-package com.eventmanager.eventservice.service;
+package com.eventmanager.eventservice.service.strategy;
 
 import com.eventmanager.eventservice.dao.OrganizerRepository;
 import com.eventmanager.eventservice.dto.UserInfoDtoRequest;

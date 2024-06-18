@@ -1,4 +1,4 @@
-package com.eventmanager.eventservice.service;
+package com.eventmanager.eventservice.service.strategy;
 
 import com.eventmanager.eventservice.dao.ParticipantRepository;
 import com.eventmanager.eventservice.dto.UserInfoDtoRequest;
@@ -14,6 +14,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.nio.CharBuffer;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -48,5 +50,12 @@ public class ParticipantServiceImpl implements ParticipantService{
         participantRepository.save(participant);
 
         return participantMapper.mapToDto(participant);
+    }
+
+    @Override
+    public List<UserInfoDtoResponse> getList() {
+        return participantRepository.findAll().stream()
+                .map(participantMapper::mapToDto)
+                .collect(Collectors.toList());
     }
 }
