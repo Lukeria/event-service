@@ -6,7 +6,6 @@ import com.eventmanager.eventservice.dto.UserInfoDtoResponse;
 import com.eventmanager.eventservice.model.Authority;
 import com.eventmanager.eventservice.model.UserCredentials;
 import com.eventmanager.eventservice.model.enums.AuthorityName;
-import com.eventmanager.eventservice.service.api.UserInfoAPIService;
 import com.eventmanager.eventservice.service.strategy.UserInfoStrategy;
 import com.eventmanager.eventservice.service.strategy.UserInfoStrategyContext;
 import lombok.RequiredArgsConstructor;
@@ -14,11 +13,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class UserInfoServiceImpl implements UserInfoAPIService {
+public class UserInfoServiceImpl implements UserInfoService {
 
     private final AuthorityRepository authorityRepository;
     private final UserInfoStrategyContext strategyContext;
@@ -47,5 +47,17 @@ public class UserInfoServiceImpl implements UserInfoAPIService {
 
         UserInfoStrategy userInfoStrategy = strategyContext.getStrategy(userCredentials.getRole().getName());
         return userInfoStrategy.getByUser(userCredentials);
+    }
+
+    @Override
+    public List<String> getEmailList(List<UserCredentials> userCredentialsList) {
+
+        List<String> emailList = new ArrayList<>();
+
+        for (UserInfoStrategy strategy : strategyContext.getStrategyList()) {
+            emailList.addAll(strategy.getEmailList(userCredentialsList));
+        }
+
+        return emailList;
     }
 }

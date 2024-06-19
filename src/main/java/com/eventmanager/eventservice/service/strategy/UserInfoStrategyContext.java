@@ -6,7 +6,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Component
@@ -27,5 +29,9 @@ public class UserInfoStrategyContext {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid user role");
         }
         return strategyContext.get(key);
+    }
+
+    public List<UserInfoStrategy> getStrategyList(){
+        return new ArrayList<>(strategyContext.values());
     }
 }
