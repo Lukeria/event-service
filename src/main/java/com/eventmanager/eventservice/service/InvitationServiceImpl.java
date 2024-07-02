@@ -7,20 +7,23 @@ import com.eventmanager.eventservice.dto.RVSPInfoDto;
 import com.eventmanager.eventservice.model.Event;
 import com.eventmanager.eventservice.model.Guest;
 import com.eventmanager.eventservice.model.Invitation;
+import com.eventmanager.eventservice.model.Notification;
 import com.eventmanager.eventservice.resources.ApplicationProperties;
 import com.eventmanager.eventservice.service.mapper.GuestMapper;
 import com.eventmanager.eventservice.service.mapper.InvitationMapper;
+import com.eventmanager.eventservice.service.observer.EmailService;
+import com.eventmanager.eventservice.service.observer.NotificationPublisherContext;
+import com.eventmanager.eventservice.service.observer.NotificationPublisherService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
-import org.springframework.mail.MailException;
 import org.springframework.mail.SimpleMailMessage;
-import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -36,7 +39,8 @@ public class InvitationServiceImpl implements InvitationService {
     private final GuestMapper guestMapper;
     private final ApplicationProperties applicationProperties;
     private final StorageService storageService;
-    private final JavaMailSender emailSender;
+    private final EmailService emailService;
+    private final NotificationPublisherService notificationService;
 
     @Override
     public InvitationDtoResponse getInvitation(String eventUuid) {
@@ -75,6 +79,17 @@ public class InvitationServiceImpl implements InvitationService {
         }
 
         Guest updatedGuest = guestService.updateRVSPStatus(guest, rvspInfoDto.getRvspStatus());
+
+        Notification notification = Notification.builder()
+                .subject("RVSP confirmation")
+                .message("Guest " + updatedGuest.getSurname() + " " + updatedGuest.getName() +
+                        " change RVSP status: " + updatedGuest.getRvspStatus())
+                .date(LocalDate.now())
+                .users(invitation.getEvent().getUserCredentialsList())
+                .build();
+
+        notificationService.notifySubscribers(NotificationPublisherContext.FULL_NOTIFICATION, notification);
+
         InvitationDtoResponse invitationDtoResponse = invitationMapper.mapToDto(invitation);
         invitationDtoResponse.setGuest(guestMapper.mapToDto(updatedGuest));
         invitationDtoResponse.setImageUrl(storageService.getImageSrcUrl(invitation.getImageUrl()));
@@ -151,50 +166,17 @@ public class InvitationServiceImpl implements InvitationService {
 
         // Для каждого гостя создаем и отправляем email сообщение
         for (Guest guest : filteredGuestList) {
-            createEmailMessageAndSend(guest, invitationLink + "/" + eventUuid);
+            SimpleMailMessage message = new SimpleMailMessage();
+            message.setFrom(applicationProperties.getEmail());
+            message.setTo(guest.getEmail());
+            message.setSubject("Invitation to join event");
+            message.setText("Dear " + guest.getName() + " " + guest.getSurname() + "!\n" +
+                    "We are pleased to invite you to our event!\n" +
+                    "Press link to see details: "
+                    + invitationLink + "/" + eventUuid);
+
+            emailService.sendMessage(message);
         }
-    }
-
-    /**
-     * Создает email сообщение и отправляет его гостю.
-     *
-     * @param guest          Гость, которому отправляется приглашение.
-     * @param invitationLink Ссылка для приглашения.
-     * @throws ResponseStatusException если превышено количество попыток отправки email.
-     */
-    private void createEmailMessageAndSend(Guest guest, String invitationLink) {
-        // Создаем email сообщение
-        SimpleMailMessage message = new SimpleMailMessage();
-        message.setFrom(applicationProperties.getEmail());
-        message.setTo(guest.getEmail());
-        message.setSubject("Invitation to join event");
-        message.setText("Dear " + guest.getName() + " " + guest.getSurname() + "!\n" +
-                "We are pleased to invite you to our event!\n" +
-                "Press link to see details: "
-                + invitationLink);
-
-        // Получаем количество возможных попыток отправки email из настроек приложения
-        int attemptsCount = applicationProperties.getAttemptsCount();
-        // Инициализируем счетчик попыток
-        int counter = 0;
-
-        // Пытаемся отправить email сообщение, делая несколько попыток в случае неудачи
-        do {
-            try {
-                // Пытаемся отправить email сообщение
-                emailSender.send(message);
-                break;
-            } catch (MailException e) {
-                // В случае возникновения ошибки и наличия попыток, пытаемся отправить сообщение повторно
-                if (counter < attemptsCount) {
-                    // Логируем ошибку и увеличиваем счетчик попыток
-                    log.error("An error occurred while sending email. Attempt " + counter++ + "Details:\n" + e);
-                } else {
-                    // Выбрасываем исключение с сообщением об ошибке
-                    throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
-                }
-            }
-        } while (counter < attemptsCount);
     }
 
     @Override

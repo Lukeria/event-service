@@ -12,4 +12,5 @@ public interface UserInfoStrategy {
     UserInfoDtoResponse getByUser(UserCredentials userCredentials);
     UserInfoDtoResponse createUser(UserInfoDtoRequest request, Authority authority);
     List<UserInfoDtoResponse> getList();
+    List<String> getEmailList(List<UserCredentials> userCredentialsList);
 }

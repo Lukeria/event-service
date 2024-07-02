@@ -11,6 +11,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.nio.CharBuffer;
@@ -35,6 +36,15 @@ public class OrganizerServiceImpl implements OrganizerService {
     public List<UserInfoDtoResponse> getList() {
         return organizerRepository.findAll().stream()
                 .map(organizerMapper::mapToDto)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<String> getEmailList(List<UserCredentials> userCredentialsList) {
+        return organizerRepository.findByUserIn(userCredentialsList)
+                .stream()
+                .map(Organizer::getEmail)
+                .filter(StringUtils::hasLength)
                 .collect(Collectors.toList());
     }
 

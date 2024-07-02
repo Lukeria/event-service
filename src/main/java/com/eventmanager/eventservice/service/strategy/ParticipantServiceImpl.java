@@ -11,6 +11,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.nio.CharBuffer;
@@ -56,6 +57,15 @@ public class ParticipantServiceImpl implements ParticipantService{
     public List<UserInfoDtoResponse> getList() {
         return participantRepository.findAll().stream()
                 .map(participantMapper::mapToDto)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<String> getEmailList(List<UserCredentials> userCredentialsList) {
+        return participantRepository.findByUserIn(userCredentialsList)
+                .stream()
+                .map(Participant::getEmail)
+                .filter(StringUtils::hasLength)
                 .collect(Collectors.toList());
     }
 }
