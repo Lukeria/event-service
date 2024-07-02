@@ -12,6 +12,7 @@ import com.eventmanager.eventservice.resources.ApplicationProperties;
 import com.eventmanager.eventservice.service.mapper.GuestMapper;
 import com.eventmanager.eventservice.service.mapper.InvitationMapper;
 import com.eventmanager.eventservice.service.observer.EmailService;
+import com.eventmanager.eventservice.service.observer.NotificationPublisherContext;
 import com.eventmanager.eventservice.service.observer.NotificationPublisherService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -87,7 +88,7 @@ public class InvitationServiceImpl implements InvitationService {
                 .users(invitation.getEvent().getUserCredentialsList())
                 .build();
 
-        notificationService.notifySubscribers(notification);
+        notificationService.notifySubscribers(NotificationPublisherContext.FULL_NOTIFICATION, notification);
 
         InvitationDtoResponse invitationDtoResponse = invitationMapper.mapToDto(invitation);
         invitationDtoResponse.setGuest(guestMapper.mapToDto(updatedGuest));
